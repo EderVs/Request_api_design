@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActvity$PlaceholderFragment">
+
+    <LinearLayout
+        android:id="@+id/event_info"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@color/primaryColor"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="22dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/event_title"
+            android:maxLines="@integer/max_lines_title"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/event_date"
+            android:maxLines="@integer/max_lines_date"
+            android:textColor="@color/text_color"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/event_description"
+            android:layout_width="wrap_content"
+            android:maxLines="@integer/max_lines_description"
+            android:paddingTop="15dp"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/EditText_where"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/event_info"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/hint_location_event"
+        android:layout_marginTop="12dp"/>
+    <Button
+        android:id="@+id/btn_asynctask"
+        android:background="@drawable/btn_selector"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/EditText_where"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:text="@string/label_asynctask"
+        android:textColor="@color/color_title"/>
+    <Button
+        android:id="@+id/btn_volley"
+        android:background="@drawable/btn_selector"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_asynctask"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="@string/label_volley"
+        android:textColor="@color/color_title"/>
+    <Button
+        android:id="@+id/btn_retrofit"
+        android:background="@drawable/btn_selector"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_volley"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:text="@string/label_retrofit"
+        android:textColor="@color/color_title"/>
+
+</RelativeLayout>
