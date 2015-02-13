@@ -5,17 +5,22 @@ import android.util.Log;
 
 import com.esperando_la.first_material_design.EventfulContract;
 
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+
+import Model.Event;
 
 /**
  * Created by eder on 12/02/2015.
  */
-public class EventfulAsyncTask extends AsyncTask<Void, Void, Void> {
+public class EventfulAsyncTask extends AsyncTask<String, Void, ArrayList<Event>> {
 
     EventFulListener responseListener;
 
@@ -26,16 +31,23 @@ public class EventfulAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected ArrayList<Event> doInBackground(String... params) {
+
+        if(params == null)
+        {
+            responseListener.onError();
+            return null;
+        }
 
         HttpURLConnection urlConnection = null;
         String eventfulResponse;
         BufferedReader reader = null;
+        String Location = params[0];
 
         try
         {
             //TODO: Quitar Hardcode
-            URL urlEventful = new URL(EventfulContract.getSearchEventsUrl("Distrito Federal"));
+            URL urlEventful = new URL(EventfulContract.getSearchEventsUrl(Location));
 
             //Abrimos la conexión
             urlConnection = (HttpURLConnection) urlEventful.openConnection();
@@ -95,18 +107,24 @@ public class EventfulAsyncTask extends AsyncTask<Void, Void, Void> {
             }
         }
 
-        Log.i(LOG_TAG, eventfulResponse);
+        //TODO: hacer un refactor
+        try {
+            return EventfulContract.parseEventsFromString(eventfulResponse);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
 
     @Override
-    protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
+    protected void onPostExecute(ArrayList<Event> events) {
+        super.onPostExecute(events);
+        responseListener.onResponseSuccess(events);
     }
 
     public interface EventFulListener{
-        public void onResponseSuccess();
+        public void onResponseSuccess(ArrayList<Event> events);
         public void onError();
     }
 }

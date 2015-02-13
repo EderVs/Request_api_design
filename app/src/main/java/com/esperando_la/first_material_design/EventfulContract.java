@@ -1,6 +1,16 @@
 package com.esperando_la.first_material_design;
 
 import android.net.Uri;
+import android.provider.CalendarContract;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import Model.Event;
 
 /**
  * Created by eder on 12/02/2015.
@@ -37,5 +47,29 @@ public class EventfulContract {
                 .build();
 
         return eventUrl.toString();
+    }
+
+    public static ArrayList<Event> parseEventsFromString (String response) throws JSONException {
+        JSONArray events = new JSONObject(response)
+                .getJSONObject(JSON_KEY_EVENTS)
+                .getJSONObject(JSON_KEY_PACKAGE_EVENTS)
+                .getJSONArray(JSON_KEY_EVENTS);
+
+        ArrayList <Event> listEvents = new ArrayList();
+
+        for (int i = 0; i < events.length(); i++)
+        {
+            JSONObject currentEvent = events.getJSONObject(i);
+
+            String title = currentEvent.getString(JSON_KEY_TITLE_EVENT);
+            String date = currentEvent.getString(JSON_KEY_DATE_EVENT);
+            String description = currentEvent.getString(JSON_KEY_DESCRIPTION_EVENT);
+
+            Event event = new Event(title, date, description);
+
+            listEvents.add(event);
+        }
+
+        return listEvents;
     }
 }
